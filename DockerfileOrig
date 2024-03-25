@@ -1,0 +1,23 @@
+# 打包依赖阶段使用golang作为基础镜像
+FROM golang:latest as builder
+
+WORKDIR /app
+
+COPY . ./
+
+ENV GOPROXY=https://proxy.golang.com.cn
+
+# RUN GOOS=linux GOARCH=amd64 go build -ldflags="-w -s" main.go
+RUN CGO_ENABLED=0 go build -o main -ldflags '-w -extldflags "-static"' .
+
+# 运行阶段指定alpine作为基础镜像
+FROM alpine
+
+LABEL maintainer="chaoxin.lu"
+
+WORKDIR /app
+
+# 将上一个阶段app文件夹下的所有文件复制进来
+COPY --from=builder /app/main .
+
+ENTRYPOINT ["./main"]
