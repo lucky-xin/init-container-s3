@@ -1,10 +1,18 @@
 # k8s container 初始化文件下载
 
-## Docker镜像构建
-运行脚本
-```shell
-build-imaga.sh
-```
+## 使用
+> 
+> 1.使用已有镜像
+> ```shell
+> docker pull xin8/init-container-s3:latest
+> ```
+> 
+> 2.Docker镜像构建
+> 运行脚本
+> ```shell
+> build-imaga.sh
+> ```
+> 
 ## 环境变量配置
 ### 环境变量配置-minio 样例：
 
