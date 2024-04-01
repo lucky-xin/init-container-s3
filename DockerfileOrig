@@ -1,5 +1,5 @@
 # 打包依赖阶段使用golang作为基础镜像
-FROM golang:latest as builder
+FROM golang:1.22 as builder
 
 WORKDIR /app
 
@@ -7,7 +7,7 @@ COPY . ./
 
 ENV GOPROXY=https://proxy.golang.com.cn
 
-# RUN GOOS=linux GOARCH=amd64 go build -ldflags="-w -s" main.go
+#RUN GOOS=linux GOARCH=arm64 go build -ldflags="-w -s" main.go
 RUN CGO_ENABLED=0 go build -o main -ldflags '-w -extldflags "-static"' .
 
 # 运行阶段指定alpine作为基础镜像
